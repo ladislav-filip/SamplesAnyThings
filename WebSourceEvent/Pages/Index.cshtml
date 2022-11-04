@@ -8,3 +8,42 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="row">
+    <div class="col">
+        <div id="dataview"></div>
+    </div>
+</div>
+
+<script>
+const source = new EventSource('/sse');
+const dtView = document.getElementById("dataview");
+
+source.onmessage = function (event) {
+  console.log(event.data);
+  let divEl = document.createElement("div");
+  var txEl = document.createElement("span");
+  txEl.className = "me-3";
+  txEl.textContent = event.lastEventId;
+  divEl.appendChild(txEl);
+  txEl = document.createElement("span");
+  txEl.textContent = event.data;
+  divEl.appendChild(txEl);
+  dtView.appendChild(divEl);
+};
+
+source.addEventListener("info", (e) => {
+    console.log(event.data);
+    let divEl = document.createElement("div");
+    divEl.className = "text-light bg-dark";
+    var txEl = document.createElement("span");
+    txEl.className = "me-3";
+    txEl.textContent = event.lastEventId;
+    divEl.appendChild(txEl);
+    txEl = document.createElement("span");
+    txEl.textContent = event.data;
+    divEl.appendChild(txEl);
+    dtView.appendChild(divEl);
+})
+
+</script>
