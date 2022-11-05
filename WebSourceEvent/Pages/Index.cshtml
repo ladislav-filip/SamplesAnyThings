@@ -4,46 +4,23 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<script type="text/javascript" src="/js/eventsource.js"></script>
 
 <div class="row">
     <div class="col">
-        <div id="dataview"></div>
+        <h5>Default</h5>
+        <div id="dataview-default"></div>
+    </div>
+    <div class="col">
+        <h5>Polyfill</h5>
+        <div id="dataview-polyfill"></div>
     </div>
 </div>
 
+<script type="text/javascript" src="/js/polyfill-sse.js"></script>
+<script type="text/javascript" src="/js/default-sse.js"></script>
+
 <script>
-const source = new EventSource('/sse');
-const dtView = document.getElementById("dataview");
-
-source.onmessage = function (event) {
-  console.log(event.data);
-  let divEl = document.createElement("div");
-  var txEl = document.createElement("span");
-  txEl.className = "me-3";
-  txEl.textContent = event.lastEventId;
-  divEl.appendChild(txEl);
-  txEl = document.createElement("span");
-  txEl.textContent = event.data;
-  divEl.appendChild(txEl);
-  dtView.appendChild(divEl);
-};
-
-source.addEventListener("info", (e) => {
-    console.log(event.data);
-    let divEl = document.createElement("div");
-    divEl.className = "text-light bg-dark";
-    var txEl = document.createElement("span");
-    txEl.className = "me-3";
-    txEl.textContent = event.lastEventId;
-    divEl.appendChild(txEl);
-    txEl = document.createElement("span");
-    txEl.textContent = event.data;
-    divEl.appendChild(txEl);
-    dtView.appendChild(divEl);
-})
-
+DefaultSseStart("dataview-default");
+PolyfillSseStart("dataview-polyfill");
 </script>
