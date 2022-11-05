@@ -1,7 +1,7 @@
 ﻿function PolyfillSseStart(containerId) {
     const source = new EventSourcePolyfill('/sse', {
         headers: {
-            'X-Custom-Header': 'value'
+            'authorization': 'Bearer ' + window.token
         }
     });
     const dtView = document.getElementById(containerId);
