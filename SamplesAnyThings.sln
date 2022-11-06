@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServerSentEvents", "ServerS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SseApi", "src\ServerSentEvents\SseApi\SseApi.csproj", "{E89D3A95-BDB9-42F3-9D54-02D6EB903E30}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sse.Infrastructure", "src\ServerSentEvents\Sse.Infrastructure\Sse.Infrastructure.csproj", "{AD2E711C-E154-4988-B6DD-871180B0D33F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,9 +22,14 @@ Global
 		{E89D3A95-BDB9-42F3-9D54-02D6EB903E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E89D3A95-BDB9-42F3-9D54-02D6EB903E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E89D3A95-BDB9-42F3-9D54-02D6EB903E30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD2E711C-E154-4988-B6DD-871180B0D33F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD2E711C-E154-4988-B6DD-871180B0D33F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD2E711C-E154-4988-B6DD-871180B0D33F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD2E711C-E154-4988-B6DD-871180B0D33F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DF2D1249-8614-4932-8D75-4DABB3A7F17D} = {2BBB8571-A7CC-4726-987C-74029D67687E}
 		{E89D3A95-BDB9-42F3-9D54-02D6EB903E30} = {2BBB8571-A7CC-4726-987C-74029D67687E}
+		{AD2E711C-E154-4988-B6DD-871180B0D33F} = {2BBB8571-A7CC-4726-987C-74029D67687E}
 	EndGlobalSection
 EndGlobal

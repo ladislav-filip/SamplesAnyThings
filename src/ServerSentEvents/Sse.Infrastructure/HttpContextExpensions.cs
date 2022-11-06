@@ -1,4 +1,6 @@
-﻿namespace sseApi.Infrastructure;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Sse.Infrastructure;
 
 public static class HttpContextExpensions
 {

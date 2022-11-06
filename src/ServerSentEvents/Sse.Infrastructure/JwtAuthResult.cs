@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SseApi.Infrastructure;
+namespace Sse.Infrastructure;
 
 public class JwtAuthResult
 {

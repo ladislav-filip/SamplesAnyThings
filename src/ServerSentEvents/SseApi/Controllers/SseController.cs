@@ -1,8 +1,7 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using sseApi.Infrastructure;
+using Sse.Infrastructure;
 
 namespace SseApi.Controllers;
 

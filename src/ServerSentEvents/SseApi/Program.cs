@@ -1,4 +1,4 @@
-using SseApi.Infrastructure;
+using Sse.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
