@@ -1,34 +1,16 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
-using WebSourceEvent.Infrastructure;
+using Sse.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 const string secret = "fullcom-asdhlas-adcfhswj45646-sdagfvae";
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
-builder.Services.AddAuthentication(options =>
-{
-    
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-    
-}).AddJwtBearer(options =>
-{
-    
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(secret)),
-        ValidateLifetime = true,
-        ValidateAudience = false,
-        ValidateIssuer = false
-    };
-});
+builder.Services.AddCustomSwagger(builder.Configuration);
+builder.Services.AddSingleton<JwtAuthManager>();
+builder.Services.AddJwtInitializer(builder.Configuration);
 
 var app = builder.Build();
 
@@ -50,7 +32,18 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-app.MapGet("/token", () => HttpContextExpensions.CreateToken(secret));
+app.MapGet("/token", () =>
+{
+    var authManager = app.Services.GetRequiredService<JwtAuthManager>();
+    var claims = new[]
+    {
+        new Claim(ClaimTypes.Sid, "p-1"),
+        new Claim(ClaimTypes.Email, "user@mail.com"),
+        new Claim(ClaimTypes.NameIdentifier, "USER-ID-1")
+    };
+    var result = authManager.GenerateTokens("pilif", claims, DateTime.Now);
+    return result.AccessToken;
+});
 
 app.MapGet("/sse", [Authorize] async (ctx) =>
 {

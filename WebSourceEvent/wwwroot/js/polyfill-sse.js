@@ -1,5 +1,5 @@
-﻿function PolyfillSseStart(containerId, jwtToken) {
-    const source = new EventSourcePolyfill('/sse', {
+﻿function PolyfillSseStart(containerId, endpoint, jwtToken) {
+    const source = new EventSourcePolyfill(endpoint, {
         headers: {
             'authorization': 'Bearer ' + jwtToken
         }

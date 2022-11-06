@@ -1,47 +1,56 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "SSE Razor";
 }
+
+<h1>SSE Razor</h1>
 
 <script type="text/javascript" src="/js/eventsource.js"></script>
 
 <div class="row">
     <div class="col">
+        <textarea class="form-control" id="token"></textarea>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
         <h5>Default</h5>
+        <button id="bt-default" class="btn btn-primary">Start</button>
         <div id="dataview-default"></div>
     </div>
     <div class="col">
         <h5>Polyfill</h5>
+        <button id="bt-polyfill" class="btn btn-primary">Start</button>
         <div id="dataview-polyfill"></div>
     </div>
 </div>
 
-<script type="text/javascript" src="js/token.js"></script>
-<script type="text/javascript" src="/js/polyfill-sse.js"></script>
-<script type="text/javascript" src="/js/default-sse.js"></script>
+@section Scripts {
+    <script type="text/javascript" src="js/token.js"></script>
+    <script type="text/javascript" src="/js/polyfill-sse.js"></script>
+    <script type="text/javascript" src="/js/default-sse.js"></script>
 
-<script>
+    <script>
 
-let xhr = new XMLHttpRequest();
-xhr.open('GET', '/token');
+  
+$.ajax({ url: "/token", success: function (result) {
+    console.log(result);
+    $("#token").text(result);
+}});
 
-xhr.onreadystatechange = function () {
-        const DONE = 4;
-        const OK = 200;
-        if (xhr.readyState === DONE) {
-                if (xhr.status === OK) {
-                        console.log(xhr.responseText);
-                        PolyfillSseStart("dataview-polyfill", xhr.responseText);
-                } else {
-                        console.log('Error: ' + xhr.status);
-                }
-        }
-};
+$("#bt-default").click(function () {
+    $(this).prop('disabled', true);
+    DefaultSseStart("dataview-default", "/sse"); 
+});
 
-// Send the request to send-ajax-data.php
-xhr.send(null);
-
+$("#bt-polyfill").click(function () {
+    $(this).prop('disabled', true);
+    PolyfillSseStart("dataview-polyfill", "/sse", $("#token").text());
+});
 
 // DefaultSseStart("dataview-default");
 </script>
+
+}

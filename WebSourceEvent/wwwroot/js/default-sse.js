@@ -1,5 +1,5 @@
-﻿function DefaultSseStart(containerId) {
-    const source = new EventSource('/sse', {
+﻿function DefaultSseStart(containerId, endpoint) {
+    const source = new EventSource(endpoint, {
         headers: {
             'X-Custom-Header': 'value'
         }
