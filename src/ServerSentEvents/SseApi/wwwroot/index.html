@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Send Server Events</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/js/eventsource.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        <h1>SSE Example</h1>
+        
+        <div class="row">
+            <div class="col">
+                <textarea class="form-control" readonly="readonly" id="token"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <h5>Default</h5>
+                <button id="bt-default" class="btn btn-primary">Start</button>
+                <div id="dataview-default"></div>
+            </div>
+            <div class="col">
+                <h5>Polyfill</h5>
+                <button id="bt-polyfill" class="btn btn-primary">Start</button>
+                <div id="dataview-polyfill"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript" src="js/token.js"></script>
+<script type="text/javascript" src="/js/polyfill-sse.js"></script>
+<script type="text/javascript" src="/js/default-sse.js"></script>
+
+<script>
+    
+    $.ajax({ url: "/auth/token", success: function (result) {
+        console.log(result);
+        $("#token").text(result.accessToken);
+    }});
+    
+    $("#bt-default").click(function () {
+        $(this).prop('disabled', true);
+        DefaultSseStart("dataview-default", "/sse/anonymous"); 
+    });
+
+    $("#bt-polyfill").click(function () {
+        $(this).prop('disabled', true);
+        PolyfillSseStart("dataview-polyfill", "/sse/auth", $("#token").text());
+    });
+    
+    // DefaultSseStart("dataview-default");
+    // PolyfillSseStart("dataview-polyfill");
+</script>
+
+</body>
+</html>

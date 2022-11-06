@@ -20,7 +20,12 @@ public class Auth : ControllerBase
     public async Task<IActionResult> GetToken()
     {
         await Task.CompletedTask;
-        var claims = new[] { new Claim(JwtRegisteredClaimNames.NameId, "p-1") };
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.Sid, "p-1"),
+            new Claim(ClaimTypes.Email, "user@mail.com"),
+            new Claim(ClaimTypes.NameIdentifier, "USER-ID-1")
+        };
         var result = _jwtAuthManager.GenerateTokens("pilif", claims, DateTime.Now);
         return Ok(result);
     }
