@@ -22,6 +22,26 @@
 <script type="text/javascript" src="/js/default-sse.js"></script>
 
 <script>
-DefaultSseStart("dataview-default");
-PolyfillSseStart("dataview-polyfill");
+
+let xhr = new XMLHttpRequest();
+xhr.open('GET', '/token');
+
+xhr.onreadystatechange = function () {
+        const DONE = 4;
+        const OK = 200;
+        if (xhr.readyState === DONE) {
+                if (xhr.status === OK) {
+                        console.log(xhr.responseText);
+                        PolyfillSseStart("dataview-polyfill", xhr.responseText);
+                } else {
+                        console.log('Error: ' + xhr.status);
+                }
+        }
+};
+
+// Send the request to send-ajax-data.php
+xhr.send(null);
+
+
+// DefaultSseStart("dataview-default");
 </script>

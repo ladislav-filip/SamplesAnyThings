@@ -1,7 +1,7 @@
-﻿function PolyfillSseStart(containerId) {
+﻿function PolyfillSseStart(containerId, jwtToken) {
     const source = new EventSourcePolyfill('/sse', {
         headers: {
-            'authorization': 'Bearer ' + window.token
+            'authorization': 'Bearer ' + jwtToken
         }
     });
     const dtView = document.getElementById(containerId);

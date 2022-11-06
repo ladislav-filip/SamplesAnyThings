@@ -1,4 +1,8 @@
-﻿namespace WebSourceEvent.Infrastructure;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+
+namespace WebSourceEvent.Infrastructure;
 
 public static class HttpContextExpensions
 {
@@ -39,5 +43,21 @@ public static class HttpContextExpensions
         }
 
         return Name;
+    }
+    
+    public static string CreateToken(string secret)
+    {
+        var key = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(secret));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+        var token = new JwtSecurityToken(
+            claims: new List<Claim>
+            {
+                new Claim("firstName", "Ahmad"),
+                new Claim("lastName", "Zooghii")
+            },
+            signingCredentials: creds,
+            expires: DateTime.UtcNow.AddMinutes(15)
+        );
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
