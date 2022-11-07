@@ -2,7 +2,8 @@
     const source = new EventSourcePolyfill(endpoint, {
         headers: {
             'authorization': 'Bearer ' + jwtToken
-        }
+        },
+        withCredentials: true
     });
     const dtView = document.getElementById(containerId);
 

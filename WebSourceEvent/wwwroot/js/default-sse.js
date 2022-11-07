@@ -1,9 +1,6 @@
 ﻿function DefaultSseStart(containerId, endpoint) {
-    const source = new EventSource(endpoint, {
-        headers: {
-            'X-Custom-Header': 'value'
-        }
-    });
+    const source = new EventSource(endpoint, { withCredentials: false });
+    console.log(source.withCredentials)
     const dtView = document.getElementById(containerId);
 
     source.onmessage = function (event) {

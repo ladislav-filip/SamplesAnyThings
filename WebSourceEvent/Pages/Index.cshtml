@@ -25,6 +25,28 @@
         <button id="bt-polyfill" class="btn btn-primary">Start</button>
         <div id="dataview-polyfill"></div>
     </div>
+    <div class="col">
+        <h5>Default CORS</h5>
+        <div>
+            <label for="cors-url" class="form-label">URL:</label>
+            <input type="text" id="cors-url" class="form-control" value="https://dockerhost:7084/sse/anonymous"/>
+        </div>
+        <button id="bt-default-cors" class="btn btn-primary">Start</button>
+        <div id="dataview-default-cors"></div>
+    </div>
+    <div class="col">
+        <h5>Polyfill CORS</h5>
+        <div>
+            <label for="cors-token" class="form-label">Token URL:</label>
+            <textarea id="cors-token" class="form-control" ></textarea>
+        </div>
+        <div>
+            <label for="cors-url-polyfill" class="form-label">URL:</label>
+            <input type="text" id="cors-url-polyfill" class="form-control" value="https://dockerhost:7084/sse/auth"/>
+        </div>
+        <button id="bt-polyfill-cors" class="btn btn-primary">Start</button>
+        <div id="dataview-polyfill-cors"></div>
+    </div>
 </div>
 
 @section Scripts {
@@ -48,6 +70,19 @@ $("#bt-default").click(function () {
 $("#bt-polyfill").click(function () {
     $(this).prop('disabled', true);
     PolyfillSseStart("dataview-polyfill", "/sse", $("#token").text());
+});
+
+$("#bt-default-cors").click(function () {
+    $(this).prop('disabled', true);
+    const url = $("#cors-url").val();
+    DefaultSseStart("dataview-default-cors", url);
+});
+
+$("#bt-polyfill-cors").click(function () {
+    $(this).prop('disabled', true);
+    const url = $("#cors-url-polyfill").val();
+    const token = $("#cors-token").val();
+    PolyfillSseStart("dataview-polyfill-cors", url, token);
 });
 
 // DefaultSseStart("dataview-default");
